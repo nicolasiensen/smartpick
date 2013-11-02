@@ -54,3 +54,4 @@ group :test do
 end
 
 gem 'rails_12factor'
+gem 'httparty'
