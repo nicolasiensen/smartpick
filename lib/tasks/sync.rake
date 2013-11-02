@@ -29,8 +29,23 @@ namespace :sync do
   task :values => :environment do
     browser = Watir::Browser.start  "http://www.fipe.org.br/web/indices/veiculos/default.aspx?azxp=1&azxp=1"
     browser.wait
-    browser.frame(id: "fconteudo").select_list(:id, "ddlMarca").select("Acura")
-    browser.frame(id: "fconteudo").select_list(:id, "ddlModelo").select("Integra GS 1.8")
-    browser.frame(id: "fconteudo").select_list(:id, "ddlAnoValor").select("1992 Gasolina")
+    date = Date.today.at_beginning_of_month - 1.month
+
+    4.times do |i|
+      date = date - i.year
+      Model.all.each do |model|
+        next if model.references.find_by_date(date).present?
+        begin
+          browser.frame(id: "fconteudo").select_list(:id, "ddlTabelaReferencia").when_present.select(I18n.l(date, format: :fipe))
+          browser.frame(id: "fconteudo").select_list(:id, "ddlMarca").when_present.select(model.car.brand.name)
+          browser.frame(id: "fconteudo").select_list(:id, "ddlModelo").when_present.select(model.car.name)
+          browser.frame(id: "fconteudo").select_list(:id, "ddlAnoValor").when_present.select(model.name)
+          price = browser.frame(id: "fconteudo").span(id: "lblValor").when_present.text
+
+          Reference.create model_id: model.id, price: price.gsub(".", "").gsub(",", ".").delete("R$ ").to_f, date: date
+        rescue
+        end
+      end
+    end
   end
 end
