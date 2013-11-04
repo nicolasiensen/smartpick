@@ -26,8 +26,7 @@ namespace :sync do
     end
   end
 
-  task :references, [:year, :brand_id] => :environment do |t, args|
-    args = {year: "2013", brand_id: nil}.merge(args)
+  task :references, [:year] => :environment do |t, args|
     browser = Watir::Browser.start  "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
     frame = browser.frame(id: "fconteudo")
     date = Date.parse("1/1/#{args[:year]}")
