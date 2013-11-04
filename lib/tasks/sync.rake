@@ -26,24 +26,35 @@ namespace :sync do
     end
   end
 
-  task :values => :environment do
-    browser = Watir::Browser.start  "http://www.fipe.org.br/web/indices/veiculos/default.aspx?azxp=1&azxp=1"
-    browser.wait
-    date = Date.today.at_beginning_of_month - 1.month
+  task :references, [:year, :brand_id] => :environment do |t, args|
+    args = {year: "2013", brand_id: nil}.merge(args)
+    browser = Watir::Browser.start  "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
+    frame = browser.frame(id: "fconteudo")
+    date = Date.parse("1/1/#{args[:year]}")
 
-    4.times do |i|
-      date = date - i.year
-      Model.all.each do |model|
-        next if model.references.find_by_date(date).present?
+    frame.select_list(:id, "ddlTabelaReferencia").select(I18n.l(date, format: :fipe))
+    while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+
+    Brand.all.each do |brand|
+      frame.select_list(:id, "ddlMarca").select(brand.name)
+      while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+      brand.cars.each do |car|
         begin
-          browser.frame(id: "fconteudo").select_list(:id, "ddlTabelaReferencia").when_present.select(I18n.l(date, format: :fipe))
-          browser.frame(id: "fconteudo").select_list(:id, "ddlMarca").when_present.select(model.car.brand.name)
-          browser.frame(id: "fconteudo").select_list(:id, "ddlModelo").when_present.select(model.car.name)
-          browser.frame(id: "fconteudo").select_list(:id, "ddlAnoValor").when_present.select(model.name)
-          price = browser.frame(id: "fconteudo").span(id: "lblValor").when_present.text
-
-          Reference.create model_id: model.id, price: price.gsub(".", "").gsub(",", ".").delete("R$ ").to_f, date: date
-        rescue
+          frame.select_list(:id, "ddlModelo").select(car.name)
+          while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+        rescue Exception => e
+          puts e.message
+        end
+        car.models.each do |model|
+          next if model.references.find_by_date(date).present?
+          begin
+            frame.select_list(:id, "ddlAnoValor").select(model.name)
+            while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+            price = frame.span(id: "lblValor").text
+            Reference.create model_id: model.id, price: price.gsub(".", "").gsub(",", ".").delete("R$ ").to_f, date: date
+          rescue Exception => e
+            puts e.message
+          end
         end
       end
     end
