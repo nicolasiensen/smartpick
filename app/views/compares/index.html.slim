@@ -1,0 +1,26 @@
+h1 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.
+
+.compares
+  form
+    label Modelo 01
+    input placeholder="large-12.columns" type="text"
+    input placeholder="large-12.columns" type="text"
+    input placeholder="large-12.columns" type="text"
+    button type="submit"
+
+      
+
+table
+  thead
+    tr
+      th
+      th
+      th
+  tbody
+    - @compares.each do |compare|
+      tr
+        td= link_to 'Show', compare
+        td= link_to 'Edit', edit_compare_path(compare)
+        td= link_to 'Destroy', compare, method: :delete, confirm: 'Are you sure?' 
+br
+  = link_to 'New Compare', new_compare_path
