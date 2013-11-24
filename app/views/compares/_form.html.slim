@@ -7,5 +7,7 @@
       ul
         - @compare.errors.full_messages.each do |msg|
           li= msg
+  = autocomplete_field_tag "car_name_1", '', autocomplete_car_name_compares_path
+  = autocomplete_field_tag "car_name_2", '', autocomplete_car_name_compares_path
   .actions
     = f.submit

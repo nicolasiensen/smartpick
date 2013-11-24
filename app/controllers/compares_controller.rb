@@ -1,5 +1,6 @@
 class ComparesController < ApplicationController
   before_action :set_compare, only: [:show, :edit, :update, :destroy]
+  autocomplete :car, :name, full: true
 
   # GET /compares
   # GET /compares.json
