@@ -35,8 +35,12 @@ namespace :sync do
     while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
 
     Brand.all.each do |brand|
-      frame.select_list(:id, "ddlMarca").select(brand.name)
-      while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+      begin
+        frame.select_list(:id, "ddlMarca").select(brand.name)
+        while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+      rescue Exception => e
+        puts e.message
+      end
       brand.cars.each do |car|
         begin
           frame.select_list(:id, "ddlModelo").select(car.name)

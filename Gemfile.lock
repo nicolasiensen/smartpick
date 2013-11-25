@@ -6,6 +6,13 @@ GIT
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
 
+GIT
+  remote: git://github.com/crowdint/rails3-jquery-autocomplete.git
+  revision: 11410b7ae2b992b00d463886bc7f1a10ff54eb98
+  specs:
+    rails3-jquery-autocomplete (1.0.11)
+      rails (>= 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -72,8 +79,10 @@ GEM
     diff-lcs (1.2.4)
     erubis (2.7.0)
     execjs (2.0.2)
+    faker (1.2.0)
+      i18n (~> 0.5)
     ffi (1.9.3)
-    foundation-rails (5.0.0.1)
+    foundation-rails (5.0.2.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
     fssm (0.2.10)
@@ -90,7 +99,10 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.5)
+      railties (>= 3.1.0)
     json (1.8.1)
+    machinist (2.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -203,12 +215,16 @@ DEPENDENCIES
   compass-rails!
   cucumber-rails
   database_cleaner (= 1.0.0.RC1)
+  faker
   foundation-rails
   httparty
   jbuilder (~> 1.2)
   jquery-rails
+  jquery-ui-rails
+  machinist (>= 2.0.0.beta2)
   pg
   rails (= 4.0.0)
+  rails3-jquery-autocomplete!
   rails_12factor
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.0)
