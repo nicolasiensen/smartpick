@@ -1,9 +1,6 @@
 = form_for(@compare) do |f|
   - if @compare.errors.any?
     #error_explanation
-      h2
-        = pluralize(@compare.errors.count, "error")
-        | prohibited this compare from being saved:
       ul
         - @compare.errors.full_messages.each do |msg|
           li= msg
