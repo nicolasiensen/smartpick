@@ -1,60 +1,40 @@
-header
-  background-color: $main_color
+body.compares.new, body.compares.create
+  .intro
+    +grid-column(6, true, true)
+    padding-top: 40px
+    padding-bottom: 20px
+    h1
+      text-align: center
+      line-height: 1.3em
+      font-weight: bold
+      color: $main_color
+      font-size: 1.5em
 
-  .logo
-    text-align: center
-    padding: 1em 0
-    +grid-column(12)
+  .main_box
+    +grid-column(5, true, true)
+    a
+      color: $action_color
 
-body
-  font-family: $font
-  background-color: $background_color    
+  form
+    background-color: white
+    padding: 1em
+    input[type='submit']
+      +button(0, $second_color, true)
+      +box-shadow(0px 3px 0px #D8770C)
+      padding: 15px
+      font-size: 1em
+      border: 0
+      width: 100%
+      margin: 0
 
-.intro
-  +grid-column(6, true, true)
-  padding: 40px 0 20px 0
-  h1
-    text-align: center
-    line-height: 1.3em
-    font-weight: bold
-    color: $main_color
-    font-size: 1.5em
+    .actions
+      margin-top: 20px
 
-.main_box
-  +grid-column(5, true, true)
-  background-color: #ffffff
-  padding-top: 1em
-  padding-bottom: 1em
-  a
-    color: $action_color
+    #error_explanation
+      +alert(red)
 
-form
-  input
-    +grid-column(12, true true)
-    +button(0, $second_color, true)
-    +box-shadow(0px 3px 0px #D8770C)
-    padding: 15px
-    font-size: 1em
-    border: 0
-
-  input[type="text"]
-    &:hover
-      background-color: white !important
-      color: $text_color
-      text-align: left
-      cursor: text
-      +box-shadow(0px 0px 9px #ccc)
-  
-  .actions
-    margin-top: 20px
-
-  #error_explanation
-    margin: 20px 0
-    font-size: 0.9em
-    background-color: rgb(253, 207, 207)
-    padding: 12px
-    border: 1px solid red
-    border-radius: 4px
-    color: red
-
-
+  @media #{$small-only}
+    .intro
+      +grid-column(12)
+    .main_box
+      +grid-column(12)

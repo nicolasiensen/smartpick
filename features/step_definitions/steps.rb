@@ -3,10 +3,10 @@ Given(/^I'm in "(.*?)"$/) do |arg1|
 end
 
 Given(/^I choose "(.*?)" in "(.*?)"$/) do |text, arg2|
-  page.execute_script %Q{ $('#{to_element(arg2)}').trigger("focus") }
-  page.execute_script %Q{ $('#{to_element(arg2)}').trigger("keydown") }
+  fill_in to_element(arg2), with: text
+  page.execute_script "$('.ui-autocomplete-input').trigger('keydown');"
   sleep 1
-  page.execute_script %Q{ $('.ui-menu-item a:contains("#{text}")').trigger("mouseenter").trigger("click"); }
+  page.execute_script "$('.ui-menu-item a:contains(\"#{text}\")').trigger('mouseenter').trigger('click');"  
 end
 
 Given(/^I fill in "(.*?)" with "(.*?)"$/) do |arg1, arg2|

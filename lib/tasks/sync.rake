@@ -21,17 +21,16 @@ namespace :sync do
     Car.all.each do |car|
       models = JSON.parse(HTTParty.get("http://fipeapi.appspot.com/api/1/carros/veiculo/#{car.brand.uid}/#{car.uid}.json").body)
       models.each do |model|
-        Model.create name: model["name"], car_id: car.id, uid: model["id"]
+        Model.create name: "#{car.brand.name} #{car.name} #{model["name"]}", car_id: car.id, uid: model["id"]
       end
     end
   end
 
-  task :references, [:year] => :environment do |t, args|
+  task :prices => :environment do |t, args|
     browser = Watir::Browser.start  "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
     frame = browser.frame(id: "fconteudo")
-    date = Date.parse("1/1/#{args[:year]}")
 
-    frame.select_list(:id, "ddlTabelaReferencia").select(I18n.l(date, format: :fipe))
+    frame.select_list(:id, "ddlTabelaReferencia").select("Atual")
     while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
 
     Brand.all.each do |brand|
@@ -49,12 +48,12 @@ namespace :sync do
           puts e.message
         end
         car.models.each do |model|
-          next if model.references.find_by_date(date).present?
+          next if model.value.present?
           begin
             frame.select_list(:id, "ddlAnoValor").select(model.name)
             while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
-            price = frame.span(id: "lblValor").text
-            Reference.create model_id: model.id, price: price.gsub(".", "").gsub(",", ".").delete("R$ ").to_f, date: date
+            value = frame.span(id: "lblValor").text
+            model.value = value.gsub(".", "").gsub(",", ".").delete("R$ ").to_f
           rescue Exception => e
             puts e.message
           end

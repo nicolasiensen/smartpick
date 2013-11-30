@@ -1,7 +1,15 @@
 .intro
   h1 Lorem tdolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut.
 
+.main_box= render 'form'
 
-.main_box
-  = render 'form'
-  = link_to 'Back', compares_path
+ol{class="joyride-list" data-joyride}
+  li{data-id="model_id_1" data-text="Próximo" data-options="tip_animation:fade"}
+    h4 Passo 1
+    p Você pode inserir a marca ou o modelo do carro que deseja comparar
+  li{data-id="model_id_2" data-text="Próximo" data-options="tip_animation:fade"}
+    h4 Passo 2
+    p Depois escolha o segundo carro para a comparação
+  li{data-id="compare_button" data-text="Fim"}
+    h4 Passo 3
+    p E aí é só comparar

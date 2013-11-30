@@ -4,7 +4,9 @@
       ul
         - @compare.errors.full_messages.each do |msg|
           li= msg
-  = autocomplete_field_tag "car_name_1", '', autocomplete_car_name_compares_path
-  = autocomplete_field_tag "car_name_2", '', autocomplete_car_name_compares_path
+  = autocomplete_field_tag "model_name_1", '', autocomplete_car_name_compares_path, id_element: '#model_id_1', placeholder: "Toyota Corolla GLi 1.6 16V", id: "model_id_1"
+  = autocomplete_field_tag "model_name_2", '', autocomplete_car_name_compares_path, id_element: '#model_id_2', placeholder: "Honda Civic CRX/ Targa VTi", id: "model_id_2"
+  = hidden_field_tag "model_id_1"
+  = hidden_field_tag "model_id_2"
   .actions
-    = f.submit
+    = f.submit 'Comparar', id: "compare_button"

@@ -1,5 +1,5 @@
 Smartpick::Application.routes.draw do
-  resources :compares do
+  resources :compares, only: [:new, :create, :show] do
     get :autocomplete_car_name, :on => :collection
   end
   
