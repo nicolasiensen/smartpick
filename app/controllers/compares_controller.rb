@@ -11,7 +11,7 @@ class ComparesController < ApplicationController
 
   def create
     @compare = Compare.new(compare_params)
-    @compare.model_ids = [params[:model_id_1], params[:model_id_2]]
+    @compare.car_ids = [params[:car_id_1], params[:car_id_2], params[:car_id_3]]
 
     respond_to do |format|
       if @compare.save

@@ -12,7 +12,7 @@ namespace :sync do
     Brand.all.each do |brand|
       cars = JSON.parse(HTTParty.get("http://fipeapi.appspot.com/api/1/carros/veiculos/#{brand.uid}.json").body)
       cars.each do |car|
-        Car.create name: car["fipe_name"], brand_id: brand.id, uid: car["id"]
+        Car.create name: "#{brand.name} #{car["fipe_name"]}", brand_id: brand.id, uid: car["id"]
       end
     end
   end
@@ -21,7 +21,7 @@ namespace :sync do
     Car.all.each do |car|
       models = JSON.parse(HTTParty.get("http://fipeapi.appspot.com/api/1/carros/veiculo/#{car.brand.uid}/#{car.uid}.json").body)
       models.each do |model|
-        Model.create name: "#{car.brand.name} #{car.name} #{model["name"]}", car_id: car.id, uid: model["id"]
+        Model.create name: model["name"], car_id: car.id, uid: model["id"]
       end
     end
   end

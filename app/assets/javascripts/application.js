@@ -25,7 +25,8 @@ $(function(){
 
 $(window).load(function(){
   $(document).foundation('joyride', 'start');
-  $('#model_id_1').focus(function(){ $('.joyride-tip-guide[data-index="0"] a.joyride-next-tip').trigger('click'); });
-  $('#model_id_2').focus(function(){ $('.joyride-tip-guide[data-index="1"] a.joyride-next-tip').trigger('click'); });
-  $('#compare_button').focus(function(){ $('.joyride-tip-guide[data-index="2"] a.joyride-next-tip').trigger('click'); });
+  $('#car_id_1_field').focus(function(){ $('.joyride-tip-guide[data-index="0"] a.joyride-close-tip').trigger('click'); });
+  $('#car_id_2_field').focus(function(){ $('.joyride-tip-guide[data-index="1"] a.joyride-close-tip').trigger('click'); });
+  $('#car_id_3_field').focus(function(){ $('.joyride-tip-guide[data-index="2"] a.joyride-close-tip').trigger('click'); });
+  $('#compare_button').focus(function(){ $('.joyride-tip-guide[data-index="3"] a.joyride-close-tip').trigger('click'); });
 });

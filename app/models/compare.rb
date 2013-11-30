@@ -1,8 +1,8 @@
 class Compare < ActiveRecord::Base
-  has_and_belongs_to_many :models
-  validate :presence_of_models
+  has_and_belongs_to_many :cars
+  validate :presence_of_cars
 
-  def presence_of_models
-    errors[:base] << "A comparação precisa de pelo menos um modelo de carro" if self.models.empty?
+  def presence_of_cars
+    errors[:base] << "A comparação precisa de pelo menos um modelo de carro" if self.cars.empty?
   end
 end

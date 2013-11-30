@@ -4,9 +4,11 @@
       ul
         - @compare.errors.full_messages.each do |msg|
           li= msg
-  = autocomplete_field_tag "model_name_1", '', autocomplete_car_name_compares_path, id_element: '#model_id_1', placeholder: "Toyota Corolla GLi 1.6 16V", id: "model_id_1"
-  = autocomplete_field_tag "model_name_2", '', autocomplete_car_name_compares_path, id_element: '#model_id_2', placeholder: "Honda Civic CRX/ Targa VTi", id: "model_id_2"
-  = hidden_field_tag "model_id_1"
-  = hidden_field_tag "model_id_2"
+  = autocomplete_field_tag "car_name_1", '', autocomplete_car_name_compares_path, id_element: '#car_id_1', placeholder: "Toyota Corolla GLi 1.6 16V", id: "car_id_1_field"
+  = autocomplete_field_tag "car_name_2", '', autocomplete_car_name_compares_path, id_element: '#car_id_2', placeholder: "Honda Civic Sedan EX 1.6 16V Aut. 4p (nacion.)", id: "car_id_2_field"
+  = autocomplete_field_tag "car_name_3", '', autocomplete_car_name_compares_path, id_element: '#car_id_3', placeholder: "Citroën C4 Competition 1.6 Flex 16V 5p Mec.", id: "car_id_3_field"
+  = hidden_field_tag "car_id_1"
+  = hidden_field_tag "car_id_2"
+  = hidden_field_tag "car_id_3"
   .actions
     = f.submit 'Comparar', id: "compare_button"
