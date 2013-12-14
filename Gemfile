@@ -65,4 +65,4 @@ gem 'httparty'
 gem 'watir'
 gem 'rails3-jquery-autocomplete', github: 'crowdint/rails3-jquery-autocomplete'
 gem 'jquery-ui-rails'
-gem 'jquery-cookie-rails'
+gem "rails-assets-modernizr"

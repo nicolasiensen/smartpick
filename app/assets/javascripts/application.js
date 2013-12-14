@@ -15,18 +15,10 @@
 //= require jquery.ui.all
 //= require autocomplete-rails
 //= require turbolinks
+//= require modernizr
 //= require foundation
-//= require jquery.cookie
 //= require_tree .
 
 $(function(){
   $(document).foundation();
-});
-
-$(window).load(function(){
-  $(document).foundation('joyride', 'start');
-  $('#car_id_1_field').focus(function(){ $('.joyride-tip-guide[data-index="0"] a.joyride-close-tip').trigger('click'); });
-  $('#car_id_2_field').focus(function(){ $('.joyride-tip-guide[data-index="1"] a.joyride-close-tip').trigger('click'); });
-  $('#car_id_3_field').focus(function(){ $('.joyride-tip-guide[data-index="2"] a.joyride-close-tip').trigger('click'); });
-  $('#compare_button').focus(function(){ $('.joyride-tip-guide[data-index="3"] a.joyride-close-tip').trigger('click'); });
 });

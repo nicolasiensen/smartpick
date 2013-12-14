@@ -4,9 +4,10 @@
       ul
         - @compare.errors.full_messages.each do |msg|
           li= msg
-  = autocomplete_field_tag "car_name_1", '', autocomplete_car_name_compares_path, id_element: '#car_id_1', placeholder: "Toyota Corolla GLi 1.6 16V", id: "car_id_1_field"
-  = autocomplete_field_tag "car_name_2", '', autocomplete_car_name_compares_path, id_element: '#car_id_2', placeholder: "Honda Civic Sedan EX 1.6 16V Aut. 4p (nacion.)", id: "car_id_2_field"
-  = autocomplete_field_tag "car_name_3", '', autocomplete_car_name_compares_path, id_element: '#car_id_3', placeholder: "Citroën C4 Competition 1.6 Flex 16V 5p Mec.", id: "car_id_3_field"
+
+  = autocomplete_field_tag "car_name_1", '', autocomplete_car_name_compares_path, id_element: '#car_id_1', placeholder: "Toyota Corolla GLi 1.6 16V", id: "car_id_1_field", "data-tooltip" => true, title: "Você pode inserir a marca ou o modelo do carro que deseja comparar", autofocus: true
+  = autocomplete_field_tag "car_name_2", '', autocomplete_car_name_compares_path, id_element: '#car_id_2', placeholder: "Honda Civic Sedan EX 1.6 16V Aut. 4p (nacion.)", id: "car_id_2_field", "data-tooltip" => true, title: "Depois escolha o segundo carro para a comparação"
+  = autocomplete_field_tag "car_name_3", '', autocomplete_car_name_compares_path, id_element: '#car_id_3', placeholder: "Citroën C4 Competition 1.6 Flex 16V 5p Mec.", id: "car_id_3_field", "data-tooltip" => true, title: "Se você quiser ainda pode escolher um terceiro carro para comparar"
   = hidden_field_tag "car_id_1"
   = hidden_field_tag "car_id_2"
   = hidden_field_tag "car_id_3"
