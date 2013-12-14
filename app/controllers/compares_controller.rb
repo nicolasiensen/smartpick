@@ -3,6 +3,16 @@ class ComparesController < ApplicationController
   autocomplete :car, :name, full: true
 
   def show
+    model1 = Hash.new
+    @compare.cars[0].models.order(:name).each{|m| model1.merge!({m.year => m.value})}
+
+    model2 = Hash.new
+    @compare.cars[1].models.order(:name).each{|m| model2.merge!({m.year => m.value})}
+
+    model3 = Hash.new
+    @compare.cars[2].models.order(:name).each{|m| model3.merge!({m.year => m.value})}
+
+    @models = model2
   end
 
   def new

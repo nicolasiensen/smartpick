@@ -1,7 +1,7 @@
 .compare_cars
-  h3 Resultado da comparação:
-  - @compare.cars.each do |car|
-    h4.subheader= car.name
+  - @compare.cars.each do |c|
+    h4= c.name
 
-.depreciation_chart{data-json= '{labels : ["January","February","March","April","May","June","July"],datasets : [{fillColor : "rgba(220,220,220,0.5)",strokeColor : "rgba(220,220,220,1)",pointColor : "rgba(220,220,220,1)",pointStrokeColor : "#fff",data : [65,59,90,81,56,55,40]},{fillColor : "rgba(151,187,205,0.5)",strokeColor : "rgba(151,187,205,1)",pointColor : "rgba(151,187,205,1)",pointStrokeColor : "#fff",data : [28,48,40,19,96,27,100]}]}'}
-  canvas id="myChart" height="400"
+hr
+
+= area_chart(@models, library: {pointSize: 5})

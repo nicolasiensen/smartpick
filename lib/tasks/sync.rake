@@ -42,7 +42,7 @@ namespace :sync do
       end
       brand.cars.each do |car|
         begin
-          frame.select_list(:id, "ddlModelo").select(car.name)
+          frame.select_list(:id, "ddlModelo").select(car.name.gsub("#{brand.name} ", ""))
           while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
         rescue Exception => e
           puts e.message
@@ -54,6 +54,7 @@ namespace :sync do
             while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
             value = frame.span(id: "lblValor").text
             model.value = value.gsub(".", "").gsub(",", ".").delete("R$ ").to_f
+            model.save
           rescue Exception => e
             puts e.message
           end
