@@ -3,4 +3,4 @@
     h4= c.name
   hr
 
-.chart= line_chart(@models, library: {pointSize: 5, curveType: 'none'})
+.chart= area_chart(@models, library: {pointSize: 5, curveType: 'none', isStacked: false})
