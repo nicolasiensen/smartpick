@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -66,3 +67,5 @@ gem 'watir'
 gem 'rails3-jquery-autocomplete', github: 'crowdint/rails3-jquery-autocomplete'
 gem 'jquery-ui-rails'
 gem 'jquery-cookie-rails'
+gem "rails-assets-modernizr"
+gem "chartkick"

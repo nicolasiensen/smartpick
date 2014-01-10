@@ -3,6 +3,15 @@ class ComparesController < ApplicationController
   autocomplete :car, :name, full: true
 
   def show
+    @models = []
+    @compare.cars.each do |car|
+      car_hash = {name: car.name, data: {}}
+      models = car.models.order("name DESC")
+      4.times do |i|
+        car_hash[:data].merge!({(Date.today.year - i) => (models[i].present? ? models[i].value.to_i : 0)})
+      end
+      @models << car_hash
+    end
   end
 
   def new
