@@ -18,7 +18,7 @@
 //= require modernizr
 //= require foundation
 //= require jquery.cookie
-//= require_tree .
+//= require compares
 
 $(function(){
   $(document).foundation();

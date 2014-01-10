@@ -33,14 +33,15 @@ namespace :sync do
     frame.select_list(:id, "ddlTabelaReferencia").select("Atual")
     while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
 
-    Brand.all.each do |brand|
+    Brand.order("random()").all.each do |brand|
       begin
         frame.select_list(:id, "ddlMarca").select(brand.name)
         while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
       rescue Exception => e
         puts e.message
       end
-      brand.cars.each do |car|
+      brand.cars.select("cars.id").joins(:models).where("models.value IS NULL").group("cars.id").each do |car|
+        car = Car.find(car.id)
         begin
           frame.select_list(:id, "ddlModelo").select(car.name.gsub("#{brand.name} ", ""))
           while frame.div(id: "UpdateProgress1").visible? do sleep 1 end

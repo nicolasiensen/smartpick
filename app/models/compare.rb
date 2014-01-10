@@ -3,6 +3,10 @@ class Compare < ActiveRecord::Base
   validate :presence_of_cars
 
   def presence_of_cars
-    errors[:base] << "A comparação precisa de pelo menos um modelo de carro" if self.cars.empty?
+    errors[:base] << "Escolha pelo menos um carro para comparar" if self.cars.empty?
+  end
+
+  def as_json options
+    super({include: {cars: {include: :models}}}.merge(options))
   end
 end
