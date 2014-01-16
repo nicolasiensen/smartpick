@@ -1,18 +1,23 @@
 body.compares.new, body.compares.create
   .intro
-    +grid-column(6, true, true)
+    +grid-column(5, true, true)
     padding-bottom: 20px
     h1
       text-align: center
-      line-height: 1.3em
-      font-weight: bold
-      color: $main_color
-      font-size: 1.5em
+      line-height: 1.2em
+      font-weight: 600
+      color: $second_color
+      font-size: 1.2em
 
   .main_box
     +grid-column(5, true, true)
+    background-color: #fff
     a
       color: $action_color
+    .search_icon
+      text-align: center
+      padding-top: 2em
+      padding-bottom: 1em
 
   form
     background-color: white
@@ -30,7 +35,7 @@ body.compares.new, body.compares.create
     .actions
       margin-top: 20px
     .car-name-1-field, .car-name-2-field, .car-name-3-field
-      margin-bottom: 1em
+      margin-bottom: 1.5em
 
   @media #{$small-only}
     .intro
@@ -38,32 +43,6 @@ body.compares.new, body.compares.create
     .main_box
       +grid-column(12)
 
-<<<<<<< HEAD
-ul.ui-autocomplete 
-  font-family: $font
-  font-size: 0.9em
-  color: #666666
-  li.ui-menu-item
-    a.ui-corner-all 
-
-.joyride-tip-guide
-  /* width: 200px */
-  +opacity(0.5)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 body.compares.show
   .cars, #col_chart_custom_tooltip
     +grid-column(12)
@@ -74,4 +53,7 @@ body.compares.show
       color: #dc3912
     &:nth-child(3)
       color: #ff9900
->>>>>>> 9142d97f70f2b9b86e7490d4e791fd942e5e6859
+
+small.error
+  border-radius: 0 0 3px 3px
+

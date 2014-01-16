@@ -4,4 +4,7 @@
     br
     |  e depois compare qual deles vale mais a pena comprar.
 
-.main_box= render 'form'
+.main_box
+  .search_icon
+    = link_to image_tag("car_search.png"), root_path
+  = render 'form'
