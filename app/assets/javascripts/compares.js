@@ -14,12 +14,13 @@ $(function(){
       }
 
       for(var i = 0; i < 4; i++){
-        dataTable.addRow([
-                         i.toString(), 
-                         getModelValue(i, cars[0]), tooltipFor(i, cars[0]), 
-                         getModelValue(i, cars[1]), tooltipFor(i, cars[1]), 
-                         getModelValue(i, cars[2]), tooltipFor(i, cars[2])
-        ]);
+        values = [i.toString()];
+
+        for(var j = 0; j < cars.length; j++){
+          values.push(getModelValue(i, cars[j]), tooltipFor(i, cars[j]))
+        }
+
+        dataTable.addRow(values);
       }
 
       var options = { legend: 'none', pointSize: 5 };
