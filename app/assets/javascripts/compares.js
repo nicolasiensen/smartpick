@@ -14,7 +14,8 @@ $(function(){
       }
 
       for(var i = 0; i < 4; i++){
-        values = [i.toString()];
+        //values = [i.toString()];
+        values = ["Ano ".concat((i+1).toString())];
 
         for(var j = 0; j < cars.length; j++){
           values.push(getModelValue(i, cars[j]), tooltipFor(i, cars[j]))
