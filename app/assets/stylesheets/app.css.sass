@@ -5,7 +5,9 @@
 
 $main_color: #5A51A2
 $second_color: #EF912A
-$action_color: #60D4D9
+$third_color: #26C9FF
+$fourth_color:#00D96D
+$action_color: #60D4D9 
 $background_color: #F0EFEE
 $border_color: #E9E8E4
 $text_color: #333
@@ -24,13 +26,11 @@ header
     text-align: center
     padding-top: 1.5em
     padding-bottom: 1em
-    +grid-column(12)
+    +grid-column(12, true, true)
 
 body
   font-family: $font
   background-color: $main_color    
-
-*
   outline: none
 
 ul.ui-autocomplete 

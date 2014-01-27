@@ -12,7 +12,7 @@ $(function(){
         dataTable.addColumn('number', cars[i]['name']);
         dataTable.addColumn({type: 'string', role: 'tooltip'});
       }
-
+  
       for(var i = 0; i < 4; i++){
         //values = [i.toString()];
         values = ["Ano ".concat((i+1).toString())];

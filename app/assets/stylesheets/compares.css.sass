@@ -44,15 +44,41 @@ body.compares.new, body.compares.create
       +grid-column(12)
 
 body.compares.show
-  .cars, #col_chart_custom_tooltip
+
+  .compares_box
+    +grid-column(12, true, true)
+    background-color: white
+    padding-top: 1em
+
+    h2
+      font-size: 1.175em
+      font-weight: 600
+      color: #999999
+
+  .cars
+    +grid-column(10)
+    p
+      margin-bottom: 0
+      font-size: 1em
+      &:nth-child(1)
+        color: $second_color
+      &:nth-child(2)
+        color: $third_color
+      &:nth-child(3)
+        color: $fourth_color
+  a
+    +grid-column(2, true)
+    font-size: 0.9em
+    color: $second_color
+    font-weight: 600
+    text-decoration: underline
+
+  .results
     +grid-column(12)
-  h4
-    &:nth-child(1)
-      color: #3366cc
-    &:nth-child(2)
-      color: #dc3912
-    &:nth-child(3)
-      color: #ff9900
+    margin-top: 2em
+    #col_chart_custom_tooltip svg
+      width: 100% !important
+      
 
 small.error
   border-radius: 0 0 3px 3px
