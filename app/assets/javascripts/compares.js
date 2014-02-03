@@ -13,7 +13,7 @@ $(function(){
         dataTable.addColumn({type: 'string', role: 'tooltip'});
       }
   
-      for(var i = 0; i < 4; i++){
+      for(var i = 0; i < 5; i++){
         //values = [i.toString()];
         values = ["Ano ".concat((i+1).toString())];
 
@@ -41,11 +41,16 @@ $(function(){
       if(car['models'][year])
         return car['models'][year]['name'];
       else
-        return "Sem nome";
+        return null;
     }
 
     function tooltipFor(year, car){
-      return getModelName(year, car).concat(": R$").concat(getModelValue(year, car).toString());
+      if(getModelName(year, car) == null){
+        return "Valor não existente"
+      }
+      else{
+        return getModelName(year, car).concat(": R$").concat(getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+      }
     };
   }
 });
