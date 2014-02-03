@@ -12,7 +12,7 @@ $(function(){
         dataTable.addColumn('number', cars[i]['name']);
         dataTable.addColumn({type: 'string', role: 'tooltip'});
       }
-
+  
       for(var i = 0; i < 4; i++){
         //values = [i.toString()];
         values = ["Ano ".concat((i+1).toString())];
@@ -24,10 +24,11 @@ $(function(){
         dataTable.addRow(values);
       }
 
-      var options = { legend: 'none', pointSize: 5 };
+      var options = { legend: 'none', pointSize: 5, title: 'Toppings I Like On My Pizza', colors: ['#26C9FF', '#00D96D', '#EF912A'], width: '900', height: '150', backgroundColor: {fill: "white"}, chartArea: {left:80,top:10}, fontName: 'open sans'};
       var chart = new google.visualization.AreaChart(document.getElementById('col_chart_custom_tooltip'));
       chart.draw(dataTable, options);
     };
+
 
     function getModelValue(year, car){
       if(car['models'][year])

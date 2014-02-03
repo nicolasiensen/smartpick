@@ -1,6 +1,13 @@
-.cars
-  - @compare.cars.each do |c|
-    h4= c.name
-  hr
+.compares_box
+  .row
+    .cars
+      h2
+        | Modelos
+      - @compare.cars.each do |c|
+        p.car_name= c.name 
 
-#col_chart_custom_tooltip{data-json=@compare.to_json}
+    = link_to 'Fazer nova consulta', 'http://www.smartpick.com.br'
+  .row
+    .results
+      h2 Resultados das comparações
+      #col_chart_custom_tooltip{data-json=@compare.to_json}
