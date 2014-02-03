@@ -2,7 +2,7 @@
   
   .car-name-1-field
     label Escolha um modelo para inciar a consulta
-    = autocomplete_field_tag "car_name_1", '', autocomplete_car_name_compares_path, id_element: '#car_id_1', placeholder: "Toyota Corolla GLi 1.6 16V", id: "car_id_1_field", "data-tooltip" => true, title: "Você pode inserir a marca ou o modelo do carro que deseja comparar", autofocus: true, class: "tip-top"
+    = autocomplete_field_tag "car_name_1", '', autocomplete_car_name_compares_path, id_element: '#car_id_1', placeholder: "Toyota Corolla GLi 1.6 16V", id: "car_id_1_field", "data-tooltip" => true, title: "Você pode inserir a marca ou o modelo do carro que deseja comparar", class: "tip-top"
     - if @compare.errors.any?
       small.error Escolha pelo menos um carro para comparar
 
