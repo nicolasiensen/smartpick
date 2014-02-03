@@ -1,10 +1,11 @@
 .compares_box
   .row
-    .cars
+    .models
       h2
         | Modelos
-      - @compare.cars.each do |c|
-        p.car_name= c.name 
+      .car_names
+        - @compare.cars.each do |c|
+          p.car_name= c.name 
 
     = link_to 'Fazer nova consulta', 'http://www.smartpick.com.br'
   .row

@@ -31,7 +31,7 @@ $(function(){
 
 
     function getModelValue(year, car){
-      if(car['models'][year])
+      if(car['models'][year] && car['models'][year]['value'])
         return car['models'][year]['value'];
       else
         return 0;

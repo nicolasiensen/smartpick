@@ -57,19 +57,21 @@ body.compares.show
       color: #999999
       padding-left: 1.5em
 
-  .cars
+  .models
     +grid-column($columns: 10)
 
-    p.car_name
-      padding-left: 2em
-      margin-bottom: 0
-      font-size: 1em
-      color: #26C9FF
-
-      &:nth-child(2)
-        color: #00D96D
-      &:nth-child(3)
-        color: #EF912A 
+    .car_names
+      p.car_name
+        padding-left: 2em
+        margin-bottom: 0
+        font-size: 1em
+  
+        &:nth-child(1)
+          color: #26C9FF
+        &:nth-child(2)
+          color: #00D96D
+        &:nth-child(3)
+          color: #EF912A 
   a
     +grid-column(2, true)
     font-size: 0.9em
