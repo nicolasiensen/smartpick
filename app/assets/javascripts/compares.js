@@ -24,7 +24,7 @@ $(function(){
         dataTable.addRow(values);
       }
 
-      var options = { legend: 'none', pointSize: 5, title: 'Toppings I Like On My Pizza', colors: ['#26C9FF', '#00D96D', '#EF912A'], width: '900', height: '150', backgroundColor: {fill: "white"}, chartArea: {left:80,top:10}, fontName: 'open sans'};
+      var options = { legend: 'none', pointSize: 5, title: 'Toppings I Like On My Pizza', vAxis: { baseline: 0 }, colors: ['#26C9FF', '#00D96D', '#EF912A'], width: '900', height: '150', backgroundColor: {fill: "white"}, chartArea: {left:80,top:10}, fontName: 'open sans'};
       var chart = new google.visualization.AreaChart(document.getElementById('col_chart_custom_tooltip'));
       chart.draw(dataTable, options);
     };
@@ -49,7 +49,7 @@ $(function(){
         return "Valor não existente"
       }
       else{
-        return getModelName(year, car).concat(": R$").concat(getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+        return getModelName(year, car).concat(": R$").concat(getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
       }
     };
   }
