@@ -14,7 +14,7 @@ $(function(){
         dataTable.addColumn('number', cars[i]['name']);
         dataTable.addColumn({type: 'string', role: 'tooltip'});
       }
-  
+
       for(var i = 0; i < 5; i++){
         values = ["Ano ".concat((i+1).toString())];
 
@@ -38,7 +38,7 @@ $(function(){
         dataTable.addColumn('number', cars[i]['name']);
         dataTable.addColumn({type: 'string', role: 'tooltip'});
       }
-  
+
       for(var i = 0; i < 5; i++){
         values = ["Ano ".concat((i+1).toString())];
 
@@ -72,11 +72,14 @@ $(function(){
     function getModelPercentage(year, car){
       if(year == 0)
         return 0
-
-      lastValue = getModelValue(year - 1, car);
-      currentValue = getModelValue(year, car);
-      difference = lastValue - currentValue;
-      return difference/lastValue;
+      else if(car['models'][year]){
+        lastValue = getModelValue(year - 1, car);
+        currentValue = getModelValue(year, car);
+        difference = lastValue - currentValue;
+        return difference/lastValue;
+      }
+      else
+        return 0
     }
 
     function tooltipByValueFor(year, car){
@@ -89,7 +92,10 @@ $(function(){
     };
 
     function tooltipByPercentageFor(year, car){
-      if(year == 0){
+      if(getModelName(year, car) == null){
+        return "Valor não existente"
+      }
+      else if(year == 0){
         return getModelName(year, car).concat(": R$").concat(getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
       }
       else{
