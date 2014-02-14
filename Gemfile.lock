@@ -90,6 +90,7 @@ GEM
     fssm (0.2.10)
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    google-analytics-rails (0.0.4)
     hike (1.2.3)
     httparty (0.11.0)
       multi_json (~> 1.0)
@@ -223,6 +224,7 @@ DEPENDENCIES
   database_cleaner (= 1.0.0.RC1)
   faker
   foundation-rails
+  google-analytics-rails
   httparty
   jbuilder (~> 1.2)
   jquery-cookie-rails

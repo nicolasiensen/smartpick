@@ -69,3 +69,4 @@ gem 'jquery-ui-rails'
 gem 'jquery-cookie-rails'
 gem "rails-assets-modernizr"
 gem "chartkick"
+gem 'google-analytics-rails'
