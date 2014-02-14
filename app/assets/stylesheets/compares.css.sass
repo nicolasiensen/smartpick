@@ -44,19 +44,22 @@ body.compares.new, body.compares.create
       +grid-column(12)
 
 body.compares.show
-
   .compares_box
     +grid-column(12, true, true)
     background-color: white
     padding-top: 2em
     padding-bottom: 1em
-
+    a
+      +grid-column(2, true)
+      font-size: 0.9em
+      color: $second_color
+      font-weight: 600
+      text-decoration: underline
     h2
       font-size: 1.175em
       font-weight: 600
       color: #999999
       padding-left: 1.5em
-
   .models
     +grid-column($columns: 10)
 
@@ -72,19 +75,10 @@ body.compares.show
           color: #00D96D
         &:nth-child(3)
           color: #EF912A 
-  a
-    +grid-column(2, true)
-    font-size: 0.9em
-    color: $second_color
-    font-weight: 600
-    text-decoration: underline
-
   .results
     +grid-column(12)
     margin-top: 2em
     #col_chart_custom_tooltip
       
-
 small.error
   border-radius: 0 0 3px 3px
-
