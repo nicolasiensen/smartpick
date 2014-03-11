@@ -70,3 +70,4 @@ gem 'jquery-cookie-rails'
 gem "rails-assets-modernizr"
 gem "chartkick"
 gem 'google-analytics-rails'
+gem 'newrelic_rpm'
