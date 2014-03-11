@@ -25,7 +25,18 @@ $(function(){
         dataTable.addRow(values);
       }
 
-      var options = { legend: 'none', pointSize: 5, title: 'Toppings I Like On My Pizza', vAxis: { baseline: 0 }, colors: ['#26C9FF', '#00D96D', '#EF912A'], width: '900', height: '150', backgroundColor: {fill: "white"}, chartArea: {left:80,top:10}, fontName: 'open sans'};
+      var options = { 
+        legend: 'none', 
+        pointSize: 5, 
+        title: 'Toppings I Like On My Pizza', 
+        vAxis: { baseline: 0 }, 
+        colors: ['#26C9FF', '#00D96D', '#EF912A'], 
+        width: '900', 
+        height: '150', 
+        backgroundColor: {fill: "white"}, 
+        chartArea: {left:80,top:10}, 
+        fontName: 'Helvetica Neue'
+      };
       var chart = new google.visualization.AreaChart(document.getElementById('depreciation_by_price'));
       chart.draw(dataTable, options);
     };
@@ -49,7 +60,18 @@ $(function(){
         dataTable.addRow(values);
       }
 
-      var options = { legend: 'none', pointSize: 5, title: 'Toppings I Like On My Pizza', vAxis: { baseline: 0, format: "#,###%" }, colors: ['#26C9FF', '#00D96D', '#EF912A'], width: '900', height: '150', backgroundColor: {fill: "white"}, chartArea: {left:80,top:10}, fontName: 'open sans' };
+      var options = { 
+        legend: 'none', 
+        pointSize: 5, 
+        title: 'Toppings I Like On My Pizza', 
+        vAxis: { baseline: 0, format: "#,###%" }, 
+        colors: ['#26C9FF', '#00D96D', '#EF912A'], 
+        width: '900', 
+        height: '150', 
+        backgroundColor: {fill: "white"}, 
+        chartArea: {left:80,top:10}, 
+        fontName: 'Helvetica Neue' 
+      };
       var chart = new google.visualization.AreaChart(document.getElementById('depreciation_by_percentage'));
       chart.draw(dataTable, options);
     };
