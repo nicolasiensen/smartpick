@@ -19,13 +19,7 @@ $(function(){
     };
 
     function drawDepreciationByPriceChart() {
-      var dataTable = new google.visualization.DataTable();
-      dataTable.addColumn('string', 'Referencia');
-
-      for(var i = 0; i < cars.length; i++){
-        dataTable.addColumn('number', cars[i]['name']);
-        dataTable.addColumn({type: 'string', role: 'tooltip'});
-      }
+      var dataTable = initDataTable();
 
       for(var i = 0; i < 5; i++){
         values = ["Ano ".concat((i+1).toString())];
@@ -45,13 +39,7 @@ $(function(){
     };
 
     function drawDepreciationByPercentageChart() {
-      var dataTable = new google.visualization.DataTable();
-      dataTable.addColumn('string', 'Referencia');
-
-      for(var i = 0; i < cars.length; i++){
-        dataTable.addColumn('number', cars[i]['name']);
-        dataTable.addColumn({type: 'string', role: 'tooltip'});
-      }
+      var dataTable = initDataTable();
 
       for(var i = 0; i < 5; i++){
         values = ["Ano ".concat((i+1).toString())];
@@ -71,13 +59,7 @@ $(function(){
     };
 
     function drawLossByPriceChart() {
-      var dataTable = new google.visualization.DataTable();
-      dataTable.addColumn('string', 'Referencia');
-
-      for(var i = 0; i < cars.length; i++){
-        dataTable.addColumn('number', cars[i]['name']);
-        dataTable.addColumn({type: 'string', role: 'tooltip'});
-      }
+      var dataTable = initDataTable();
 
       for(var i = 0; i < 5; i++){
         values = ["Ano ".concat((i+1).toString())];
@@ -94,33 +76,20 @@ $(function(){
       chart.draw(dataTable, chartOptions);
     }
 
-    function getModelValue(year, car){
-      if(car['models'][year] && car['models'][year]['value'])
-        return car['models'][year]['value'];
-      else
-        return 0;
-    }
+    function initDataTable(){
+      var dataTable = new google.visualization.DataTable();
+      dataTable.addColumn('string', 'Referencia');
 
-    function getModelName(year, car){
-      if(car['models'][year])
-        return car['models'][year]['name'];
-      else
-        return null;
-    }
-
-    function getModelPercentage(year, car){
-      if(year == 0)
-        return 0
-      else if(car['models'][year]){
-        lastValue = getModelValue(year - 1, car);
-        currentValue = getModelValue(year, car);
-        difference = lastValue - currentValue;
-        return difference/lastValue;
+      for(var i = 0; i < cars.length; i++){
+        dataTable.addColumn('number', cars[i]['name']);
+        dataTable.addColumn({type: 'string', role: 'tooltip'});
       }
-      else
-        return 0
+
+      return dataTable;
     }
 
+    // Tooltip text generators
+   
     function tooltipByValueFor(year, car){
       if(getModelName(year, car) == null){
         return "Valor não existente"
@@ -142,13 +111,6 @@ $(function(){
       }
     }
 
-    function getModelLossInPrice(year, car){
-      if(getModelValue(year, car) > 0)
-        return getModelValue(0, car) - getModelValue(year, car);
-      else
-        return 0;
-    }
-
     function tooltipByLossInPriceFor(year, car){
       if(getModelName(year, car) == null){
         return "Valor não existente"
@@ -156,6 +118,44 @@ $(function(){
       else{
         return "R$".concat(getModelLossInPrice(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
       }
+    }
+
+    // Values calculators
+
+    function getModelValue(year, car){
+      if(car['models'][year] && car['models'][year]['value'])
+        return car['models'][year]['value'];
+      else
+        return 0;
+    }
+
+    function getModelPercentage(year, car){
+      if(year == 0)
+        return 0
+      else if(car['models'][year]){
+        lastValue = getModelValue(year - 1, car);
+        currentValue = getModelValue(year, car);
+        difference = lastValue - currentValue;
+        return difference/lastValue;
+      }
+      else
+        return 0
+    }
+
+    function getModelLossInPrice(year, car){
+      if(getModelValue(year, car) > 0)
+        return getModelValue(0, car) - getModelValue(year, car);
+      else
+        return 0;
+    }
+
+    // Gets
+
+    function getModelName(year, car){
+      if(car['models'][year])
+        return car['models'][year]['name'];
+      else
+        return null;
     }
   }
 });
