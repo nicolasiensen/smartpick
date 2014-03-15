@@ -3,6 +3,7 @@ $(function(){
     google.setOnLoadCallback(drawDepreciationByPriceChart);
     google.setOnLoadCallback(drawDepreciationByPercentageChart);
     google.setOnLoadCallback(drawLossByPriceChart);
+    google.setOnLoadCallback(drawLossByPercentageChart);
 
     var json = $("#compare").data('json');
     var cars = json['cars'];
@@ -76,6 +77,25 @@ $(function(){
       chart.draw(dataTable, chartOptions);
     }
 
+    function drawLossByPercentageChart() {
+      var dataTable = initDataTable();
+
+      for(var i = 0; i < 5; i++){
+        values = ["Ano ".concat((i+1).toString())];
+        for(var j = 0; j < cars.length; j++){
+          values.push(getModelLossInPercentage(i, cars[j]), tooltipByLossInPercentageFor(i, cars[j]));
+        }
+        dataTable.addRow(values);
+      }
+
+      chartOptions = defaultChartOptions;
+      chartOptions.vAxis.format = "#,###%";
+
+      var chart = new google.visualization.AreaChart(document.getElementById('loss_by_percentage'));
+      chart.draw(dataTable, chartOptions);
+    }
+
+
     function initDataTable(){
       var dataTable = new google.visualization.DataTable();
       dataTable.addColumn('string', 'Referencia');
@@ -107,7 +127,7 @@ $(function(){
         return getModelName(year, car).concat(": R$").concat(getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
       }
       else{
-        return getModelName(year, car) + ": R$" + getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" + (Math.round(getModelPercentage(year, car) * 100)) + "% de depreciação em relação ao ano anterior";
+        return getModelName(year, car) + ": R$" + getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" + (getModelPercentage(year, car) * 100).toFixed(2) + "% de depreciação em relação ao ano anterior";
       }
     }
 
@@ -116,8 +136,17 @@ $(function(){
         return "Valor não existente"
       }
       else{
-        return "R$".concat(getModelLossInPrice(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+        return getModelName(year, car) + ": R$" + getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" + "R$".concat(getModelLossInPrice(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")) + " de prejuízo em relação valor original";
       }
+    }
+
+    function tooltipByLossInPercentageFor(year, car){
+      if(getModelName(year, car) == null)
+        return "Valor não existente"
+      else if(year == 0)
+        return getModelName(year, car).concat(": R$").concat(getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+      else
+        return getModelName(year, car) + ": R$" + getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" + (getModelLossInPercentage(year, car) * 100).toFixed(2) + "% de prejuízo em relação valor original";
     }
 
     // Values calculators
@@ -145,6 +174,13 @@ $(function(){
     function getModelLossInPrice(year, car){
       if(getModelValue(year, car) > 0)
         return getModelValue(0, car) - getModelValue(year, car);
+      else
+        return 0;
+    }
+
+    function getModelLossInPercentage(year, car){
+      if(getModelValue(year, car) > 0)
+        return 1 - (getModelValue(year, car)/getModelValue(0, car));
       else
         return 0;
     }
