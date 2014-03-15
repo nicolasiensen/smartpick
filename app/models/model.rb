@@ -4,7 +4,7 @@ class Model < ActiveRecord::Base
   belongs_to :car
   has_many :references
 
-  default_scope order('name DESC')
+  default_scope { order('name DESC') }
 
   def year
     name.to_i
