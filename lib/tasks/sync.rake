@@ -27,7 +27,8 @@ namespace :sync do
   end
 
   task :prices => :environment do |t, args|
-    browser = Watir::Browser.start  "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
+    browser = Watir::Browser.new :phantomjs
+    browser.goto "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
     frame = browser.frame(id: "fconteudo")
 
     frame.select_list(:id, "ddlTabelaReferencia").select("Atual")
