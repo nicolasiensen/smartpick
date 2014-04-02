@@ -33,6 +33,8 @@ namespace :sync do
     car = Car.where("((SELECT count(*) FROM models WHERE models.car_id = cars.id) = 0)").first
     car = Model.order(:updated_at).first.car if car.nil?
 
+    logger.info "Syncing models of #{car.uid}"
+
     browser = Watir::Browser.new :phantomjs
     browser.goto "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
     frame = browser.frame(id: "fconteudo")
