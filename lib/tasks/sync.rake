@@ -39,11 +39,13 @@ namespace :sync do
     end
   end
 
-  task :models_by_car, [:car_uid] => :environment do |t, args|
+  task :models => :environment do
+    car = Car.where("((SELECT count(*) FROM models WHERE models.car_id = cars.id) = 0)").first
+    car = Model.order(:updated_at).first.car if car.nil?
+
     browser = Watir::Browser.new :phantomjs
     browser.goto "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
     frame = browser.frame(id: "fconteudo")
-    car = Car.where(uid: args[:car_uid]).first
 
     frame.select_list(:id, "ddlMarca").select_value(car.brand.uid)
     while frame.div(id: "UpdateProgress1").visible? do sleep 0.5 end
