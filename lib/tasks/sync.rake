@@ -8,15 +8,23 @@ namespace :sync do
     brands = frame.select_list(:id, "ddlMarca").options
     brands.each do |brand|
       next if brand.value == "0"
-      Brand.create name: brand.text, uid: brand.text
+      Brand.create name: brand.text, uid: brand.value
     end
   end
 
   task :cars => :environment do
+    browser = Watir::Browser.new :phantomjs
+    browser.goto "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
+    frame = browser.frame(id: "fconteudo")
+
     Brand.all.each do |brand|
-      cars = JSON.parse(HTTParty.get("http://fipeapi.appspot.com/api/1/carros/veiculos/#{brand.uid}.json").body)
+      frame.select_list(:id, "ddlMarca").select_value(brand.uid)
+      while frame.div(id: "UpdateProgress1").visible? do sleep 0.5 end
+      cars = frame.select_list(:id, "ddlModelo").options
+
       cars.each do |car|
-        Car.create name: "#{brand.name} #{car["fipe_name"]}", brand_id: brand.id, uid: car["id"]
+        next if car.value == "0"
+        Car.create name: "#{brand.name} #{car.text}", uid: car.value, brand: brand
       end
     end
   end
