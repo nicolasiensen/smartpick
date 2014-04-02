@@ -31,16 +31,6 @@ namespace :sync do
 
   task :models => :environment do
     car = Car.where("((SELECT count(*) FROM models WHERE models.car_id = cars.id) = 0)").first
-    if car.present?
-      Rake::Task["sync:models_by_car"].invoke(car.uid)
-    else
-      model = Model.order(:updated_at).first
-      Rake::Task["sync:models_by_car"].invoke(model.car.uid)
-    end
-  end
-
-  task :models => :environment do
-    car = Car.where("((SELECT count(*) FROM models WHERE models.car_id = cars.id) = 0)").first
     car = Model.order(:updated_at).first.car if car.nil?
 
     browser = Watir::Browser.new :phantomjs
