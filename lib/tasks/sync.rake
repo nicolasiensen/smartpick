@@ -29,50 +29,33 @@ namespace :sync do
     end
   end
 
-  task :models => :environment do
-    Car.all.each do |car|
-      models = JSON.parse(HTTParty.get("http://fipeapi.appspot.com/api/1/carros/veiculo/#{car.brand.uid}/#{car.uid}.json").body)
-      models.each do |model|
-        Model.create name: model["name"], car_id: car.id, uid: model["id"]
-      end
-    end
-  end
-
-  task :prices => :environment do |t, args|
+  task :models, [:car_uid] => :environment do |t, args|
     browser = Watir::Browser.new :phantomjs
     browser.goto "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
     frame = browser.frame(id: "fconteudo")
+    car = Car.where(uid: args[:car_uid]).first
 
-    frame.select_list(:id, "ddlTabelaReferencia").select("Atual")
-    while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+    frame.select_list(:id, "ddlMarca").select_value(car.brand.uid)
+    while frame.div(id: "UpdateProgress1").visible? do sleep 0.5 end
+    frame.select_list(:id, "ddlModelo").select_value(car.uid)
+    while frame.div(id: "UpdateProgress1").visible? do sleep 0.5 end
+    models = frame.select_list(:id, "ddlAnoValor").options.map{|o| {value: o.value, text: o.text}}
 
-    Brand.order("random()").all.each do |brand|
+    models.each do |model|
+      next if model[:value] == "0"
       begin
-        frame.select_list(:id, "ddlMarca").select(brand.name)
-        while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
+        frame.select_list(:id, "ddlAnoValor").select_value(model[:value])
+        while frame.div(id: "UpdateProgress1").visible? do sleep 0.5 end
+        value = frame.span(id: "lblValor").text.gsub(".", "").gsub(",", ".").delete("R$ ").to_f
+        m = Model.where(uid: model[:value]).first
+
+        if m.present?
+          m.update_attribute :value, value
+        else
+          m = Model.create name: model[:text], value: value, car: car, uid: model[:value]
+        end
       rescue Exception => e
         puts e.message
-      end
-      brand.cars.select("cars.id").joins(:models).where("models.value IS NULL").group("cars.id").each do |car|
-        car = Car.find(car.id)
-        begin
-          frame.select_list(:id, "ddlModelo").select(car.name.gsub("#{brand.name} ", ""))
-          while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
-        rescue Exception => e
-          puts e.message
-        end
-        car.models.each do |model|
-          next if model.value.present?
-          begin
-            frame.select_list(:id, "ddlAnoValor").select(model.name)
-            while frame.div(id: "UpdateProgress1").visible? do sleep 1 end
-            value = frame.span(id: "lblValor").text
-            model.value = value.gsub(".", "").gsub(",", ".").delete("R$ ").to_f
-            model.save
-          rescue Exception => e
-            puts e.message
-          end
-        end
       end
     end
   end
