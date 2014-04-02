@@ -2,9 +2,13 @@ require 'httparty'
 
 namespace :sync do
   task :brands => :environment do
-    brands = JSON.parse(HTTParty.get('http://fipeapi.appspot.com/api/1/carros/marcas.json').body)
+    browser = Watir::Browser.new :phantomjs
+    browser.goto "http://www.fipe.org.br/web/index.asp?azxp=1&azxp=1&aspx=/web/indices/veiculos/default.aspx"
+    frame = browser.frame(id: "fconteudo")
+    brands = frame.select_list(:id, "ddlMarca").options
     brands.each do |brand|
-      Brand.create name: brand["fipe_name"], uid: brand["id"]
+      next if brand.value == "0"
+      Brand.create name: brand.text, uid: brand.text
     end
   end
 
