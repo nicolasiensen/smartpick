@@ -5,7 +5,7 @@
         | Modelos
       .car_names
         - @compare.cars.each do |c|
-          p.car_name= c.name 
+          p.car_name= c.name
     = link_to 'Fazer nova consulta', root_path
 
   #compare{data-json=@compare.to_json}
@@ -19,13 +19,18 @@
     .results
       h2 Depreciação (%)
       #depreciation_by_percentage
-        
+
   .row
     .results
       h2 Prejuízo ($)
       #loss_by_price
-      
+
   .row
     .results
       h2 Prejuízo (%)
       #loss_by_percentage
+
+  .row
+    .results
+      h2 IPVA ($)
+      #ipva
