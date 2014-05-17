@@ -5,6 +5,7 @@ $(function(){
     google.setOnLoadCallback(drawLossByPriceChart);
     google.setOnLoadCallback(drawLossByPercentageChart);
     google.setOnLoadCallback(drawIPVAChart);
+    google.setOnLoadCallback(drawTotalChart);
 
     var json = $("#compare").data('json');
     var cars = json['cars'];
@@ -114,6 +115,24 @@ $(function(){
       chart.draw(dataTable, chartOptions);
     }
 
+    function drawTotalChart(){
+      var dataTable = initDataTable();
+
+      for(var i = 0; i < 5; i++){
+        values = ["Ano ".concat((i+1).toString())];
+        for(var j = 0; j < cars.length; j++){
+          values.push(getModelTotal(i, cars[j]), tooltipTotalFor(i, cars[j]));
+        }
+        dataTable.addRow(values);
+      }
+
+      chartOptions = defaultChartOptions;
+      chartOptions.vAxis.format = "R$###,###";
+
+      var chart = new google.visualization.AreaChart(document.getElementById('total'));
+      chart.draw(dataTable, chartOptions);
+    }
+
     function initDataTable(){
       var dataTable = new google.visualization.DataTable();
       dataTable.addColumn('string', 'Referencia');
@@ -176,6 +195,18 @@ $(function(){
         return getModelName(year, car) + ": R$" + getModelValue(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" + (getModelLossInPercentage(year, car) * 100).toFixed(2) + "% de prejuízo em relação valor original";
     }
 
+    function tooltipTotalFor(year, car){
+      if(getModelName(year, car) == null)
+        return "Valor não existente"
+      else{
+        return getModelName(year, car) + ": R$" + getModelTotal(year,car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" +
+        "Prejuízo: R$" + getModelLossInPrice(year, car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" +
+        "IPVA: R$" + getModelIPVA(year,car).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + "\n" +
+        "DPVAT: R$" + getDPVAT(year) + "\n" +
+        "Licenciamento: R$" + getLicense(year)
+      }
+    }
+
     // Values calculators
 
     function getModelValue(year, car){
@@ -207,7 +238,7 @@ $(function(){
 
     function getModelIPVA(year, car){
       if(getModelValue(year, car) > 0)
-        return getModelValue(year, car) * 0.04;
+        return parseInt(getModelValue(year, car) * 0.04);
       else
         return 0;
     }
@@ -219,6 +250,29 @@ $(function(){
         return 0;
     }
 
+    function getModelTotal(year, car){
+      return getModelLossInPrice(year, car) +
+      getModelIPVA(year, car) +
+      getDPVAT(year) +
+      getLicense(year)
+    }
+
+    function getDPVAT(year){
+      if(year <= 1)
+        return 105
+      else
+        return 101
+    }
+
+    function getLicense(year){
+      if(year <= 1)
+        return 65
+      else if(year == 2)
+        return 62
+      else
+        return 59
+    }
+
     // Gets
 
     function getModelName(year, car){
@@ -226,6 +280,12 @@ $(function(){
         return car['models'][year]['name'];
       else
         return null;
+    }
+
+    // Helpers
+
+    function toMoney(value){
+      return "R$" + value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")
     }
   }
 });
